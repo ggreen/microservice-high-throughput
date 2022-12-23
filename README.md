@@ -1,8 +1,8 @@
 
 
-Example
+Project Goals
 
-- Batch input 1 billion transactions
+- Batch input millions of transactions
 - Remoting with RabbitMQ
 - Spring Cloud Stream
 - Super Stream
