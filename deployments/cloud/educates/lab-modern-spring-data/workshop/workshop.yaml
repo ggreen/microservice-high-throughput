@@ -1,0 +1,19 @@
+name: Starter Workshop
+modules:
+  activate:
+  - workshop-overview
+  - setup-environment
+  - exercises/01-web-real-time-gemfire-redis
+  - exercises/r00-rabbitmq-cluster
+  - exercises/r01-rabbitmq-manage
+  - workshop-summary
+spec:
+  session:
+    applications:
+      vcluster:
+        enabled: true
+        resources:
+          syncer:
+            memory: 7Gi
+          k3s:
+            memory: 8Gi
