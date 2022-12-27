@@ -10,6 +10,7 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -20,8 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -55,6 +54,7 @@ public class BatchConfig {
     }
 
     @Bean
+//    @ConditionalOnProperty(name="writeSink")
     public JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Transaction>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
@@ -62,6 +62,17 @@ public class BatchConfig {
                 .dataSource(dataSource)
                 .build();
     }
+
+//    @Bean
+//    @ConditionalOnProperty(matchIfMissing=true, name="writeSink")
+//    public ItemWriter<Transaction> noopWriter() {
+//        return new ItemWriter<Transaction>() {
+//            @Override
+//            public void write(Chunk<? extends Transaction> chunk) throws Exception {
+//
+//            }
+//        };
+//    }
 
     @Bean
     public Job importUserJob(
@@ -91,7 +102,7 @@ public class BatchConfig {
         };
     }
     @Bean
-    public Step step1(JdbcBatchItemWriter<Transaction> writer,
+    public Step step1(ItemWriter<Transaction> writer,
                       JobRepository jobRepository,
                       PlatformTransactionManager transactionManager,
                       ThreadPoolTaskExecutor taskExecutor) {
@@ -99,8 +110,8 @@ public class BatchConfig {
         taskExecutor.setCorePoolSize(corePoolSize);
 
         return new StepBuilder("step1")
-                .repository(jobRepository)
                 .transactionManager(transactionManager)
+                .repository(jobRepository)
                 .<Transaction, Transaction> chunk(chunkSize)
                 .reader(reader())
                 .writer(writer)
