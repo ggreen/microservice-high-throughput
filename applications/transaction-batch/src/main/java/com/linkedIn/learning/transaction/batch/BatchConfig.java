@@ -18,6 +18,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -54,7 +55,7 @@ public class BatchConfig {
     }
 
     @Bean
-//    @ConditionalOnProperty(name="writeSink")
+    @ConditionalOnProperty(name="writeSink")
     public JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<Transaction>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())

@@ -57,10 +57,15 @@ truncate ms_transactions ;
                39 | COMPLETED | 00:00:15.204 | 131,544
 ```
 
-## Postgres Chunk Size 500000 - 16 threads -  2 GB
+
+------------------
+
+## RabbitMQ Streams
+
 
 ```text
- job_execution_id |  total_time  |   tps   
-------------------+--------------+---------
-               17 | 00:00:03.604 | 554,939
+(select max(job_execution_id) from batch_job_execution);
+job_execution_id |  status   |  total_time  |   tps   
+------------------+-----------+--------------+---------
+6 | COMPLETED | 00:00:13.267 | 150,750
 ```
