@@ -25,6 +25,7 @@ public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
         this.handler = confirmationStatus -> {};
     }
 
+//   Slower
 //    @Override
 //    public void write(List<? extends Transaction> items) throws Exception {
 //        items.parallelStream().forEach(transaction ->

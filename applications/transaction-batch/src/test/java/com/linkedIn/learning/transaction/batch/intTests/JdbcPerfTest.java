@@ -1,6 +1,5 @@
-package com.linkedIn.learning.transaction.batch.writer;
+package com.linkedIn.learning.transaction.batch.intTests;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linkedIn.learning.throughput.domain.Transaction;
 import nyla.solutions.core.patterns.batch.BatchJob;
@@ -18,10 +17,10 @@ import java.util.function.Supplier;
 
 import static java.lang.String.valueOf;
 
-public class JdbcIntTest {
+public class JdbcPerfTest {
 
         @Test
-        void integrationTestJDbc() {
+        void jdbcPerfTest() {
 
             Sql sql = new Sql();
 
