@@ -4,7 +4,6 @@ import com.linkedIn.learning.throughput.domain.Transaction;
 import com.linkedIn.learning.transaction.batch.mapping.CsvToTransactionConverter;
 import com.linkedIn.learning.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.linkedIn.learning.transaction.batch.runner.BatchJobRunner;
-import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.supplier.CsvConverterSupplier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,15 +36,4 @@ public class BatchConfig {
         return supplier;
     }
 
-    @Bean
-    Consumer<List<Transaction>> consumer(Producer producer, TransactionToJsonBytesConverter converter)
-    {
-        return transactionList -> {
-            transactionList.forEach(transaction ->
-            {
-                producer.send(producer.messageBuilder().addData(
-                        converter.convert(transaction)).build(),null);
-            });
-        };
-    }
 }

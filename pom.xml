@@ -17,6 +17,7 @@
         <module>applications/spring-batch-csv-to-rabbit-stream</module>
         <module>applications/spring-batch-csv-to-apache-kafka</module>
         <module>applications/spring-boot-csv-to-rabbit-stream</module>
+        <module>applications/spring-boot-csv-to-apache-kafka</module>
     </modules>
     <build>
         <pluginManagement>
