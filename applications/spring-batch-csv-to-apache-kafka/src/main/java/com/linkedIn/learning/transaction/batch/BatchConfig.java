@@ -109,7 +109,6 @@ public class BatchConfig {
     KafkaItemWriter writer(KafkaTemplate<String, Transaction> template)
     {
         template.setMessageConverter(new JsonMessageConverter());
-//        template.setMessagingConverter(new MappingJackson2MessageConverter());
         template.setDefaultTopic(topicName);
 
         var writer = new KafkaItemWriter<String,Transaction>();

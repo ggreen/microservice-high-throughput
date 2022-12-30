@@ -11,11 +11,12 @@
     <name>microservices-high-throughput-parent</name>
     <modules>
         <module>components/throughput-domain</module>
-        <module>components/retail-repositories-caching</module>
+        <module>components/transaction-services</module>
         <module>applications/transaction-batch</module>
         <module>applications/spring-batch-cvs-to-postgres</module>
         <module>applications/spring-batch-csv-to-rabbit-stream</module>
         <module>applications/spring-batch-csv-to-apache-kafka</module>
+        <module>applications/spring-boot-csv-to-rabbit-stream</module>
     </modules>
     <build>
         <pluginManagement>
