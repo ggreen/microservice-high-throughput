@@ -14,12 +14,11 @@ Outline
     - Spring Batch - CVS to Postgres
     - Spring Batch - CSV to RabbitMQ Stream
     - Spring Batch - CSV to Apache Kafka
-    - Spring Batch - RabbitMQ Stream to Postgres
   - Java Batching 
     - Spring Boot - CSV to RabbitMQ Stream
     - Spring Boot - CSV to Apache Kafka
     - Spring Boot - RabbitMQ Stream to Postgres
-- Realtime
+- Realtime Consumption
   - Spring Cloud Stream
     - Spring Cloud Stream Consumer - Rabbit Stream - Postgres
     - Java RabbitMQ stream Producer
