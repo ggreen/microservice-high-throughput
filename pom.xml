@@ -13,6 +13,9 @@
         <module>components/throughput-domain</module>
         <module>components/retail-repositories-caching</module>
         <module>applications/transaction-batch</module>
+        <module>applications/spring-batch-cvs-to-postgres</module>
+        <module>applications/spring-batch-csv-to-rabbit-stream</module>
+        <module>applications/spring-batch-csv-to-apache-kafka</module>
     </modules>
     <build>
         <pluginManagement>
