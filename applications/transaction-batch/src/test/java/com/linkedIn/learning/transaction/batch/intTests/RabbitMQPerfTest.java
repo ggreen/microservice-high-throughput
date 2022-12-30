@@ -20,7 +20,7 @@ import static java.lang.String.valueOf;
 public class RabbitMQPerfTest {
 
     @Test
-    void integrationTestRabbitMQ_json_serialization() {
+    void rabbitMQ_perfTest_with_json_serialization() {
         final ObjectMapper objectMapper = new ObjectMapper();
 
         Converter<Transaction, byte[]> converter = transaction ->

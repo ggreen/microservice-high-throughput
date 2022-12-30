@@ -27,10 +27,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static java.lang.String.valueOf;
+import static java.util.Arrays.asList;
 
 public class KafkaPerfTest {
     private String topicName = "test-transactions";
-    private int batchSize = 6000;
+    private int batchSize = 10000;
+    private Integer lingerMs = 20;
+    private int partitions = 1;
+    private short replicationFactor = 1;
 
     @Test
     void kafkaPerfTest() {
@@ -39,9 +43,9 @@ public class KafkaPerfTest {
 
         var props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
-        props.put("linger.ms", 1);
+        props.put("linger.ms", lingerMs.toString());
+        props.put("batch.size",String.valueOf(batchSize));
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        Object JsonSerializer;
         props.put("value.serializer", org.apache.kafka.common.serialization.ByteArraySerializer.class.getName());
 
         final int[] i = {1};
@@ -93,8 +97,14 @@ public class KafkaPerfTest {
         props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 
         try (Admin admin = Admin.create(props)) {
-            int partitions = 12;
-            short replicationFactor = 1;
+
+            try {
+                var deleteResults = admin.deleteTopics(asList(topicName));
+                deleteResults.all().get();
+            }
+            catch(Exception e){}
+
+
             // Create a compacted topic
             CreateTopicsResult result = admin.createTopics(Collections.singleton(
                     new NewTopic(topicName, partitions, replicationFactor)
