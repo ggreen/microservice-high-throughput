@@ -6,6 +6,7 @@ import nyla.solutions.core.patterns.batch.BatchJob;
 import nyla.solutions.core.patterns.batch.BatchReport;
 import nyla.solutions.core.patterns.jdbc.Sql;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.postgresql.Driver;
 
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import static java.lang.String.valueOf;
 public class JdbcPerfTest {
 
         @Test
+        @EnabledIfSystemProperty(named = "intTest", matches = "true")
         void jdbcPerfTest() {
 
             Sql sql = new Sql();

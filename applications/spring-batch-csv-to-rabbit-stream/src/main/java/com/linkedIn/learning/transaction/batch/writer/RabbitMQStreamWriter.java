@@ -31,6 +31,8 @@ public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
     public void write(List<? extends Transaction> items) throws Exception {
         items.forEach(transaction ->
                         producer.send(producer.messageBuilder()
+                                        .applicationProperties().entry("contentType",
+                                        "application/json").messageBuilder()
                                 .addData(serializer.convert(transaction)).build(),handler));
     }
 }

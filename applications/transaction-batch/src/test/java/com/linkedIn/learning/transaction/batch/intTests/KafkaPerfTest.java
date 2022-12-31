@@ -17,6 +17,7 @@ import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.config.TopicConfig;
 import org.apache.kafka.common.errors.TopicExistsException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.Collections;
@@ -37,6 +38,7 @@ public class KafkaPerfTest {
     private short replicationFactor = 1;
 
     @Test
+    @EnabledIfSystemProperty(named = "intTest", matches = "true")
     void kafkaPerfTest() {
 
         createTopic();

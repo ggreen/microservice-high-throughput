@@ -17,11 +17,10 @@ Outline
   - Java Batching 
     - Spring Boot - CSV to RabbitMQ Stream
     - Spring Boot - CSV to Apache Kafka
-    - Spring Boot - RabbitMQ Stream to Postgres
 - Realtime Consumption
   - Spring Cloud Stream
     - Spring Cloud Stream Consumer - Rabbit Stream - Postgres
-    - Java RabbitMQ stream Producer
+    - Java RabbitMQ stream Producer - performance
   - Spring Web
     - Rest Controller Producer - Java RabbitMQ stream Producer
   - Spring Cloud Gateway

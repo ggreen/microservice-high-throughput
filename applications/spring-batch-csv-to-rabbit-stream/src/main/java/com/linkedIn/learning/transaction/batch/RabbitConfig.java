@@ -12,10 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.serializer.Serializer;
 
+import java.nio.charset.StandardCharsets;
+
 @Configuration
 public class RabbitConfig {
 
-    @Value("${rabbitmq.stream.name:transaction}")
+    @Value("${rabbitmq.stream.name}")
     private String streamName;
 
 
@@ -42,7 +44,7 @@ public class RabbitConfig {
     {
         return transaction -> {
             try {
-                return objectMapper.writeValueAsBytes(transaction);
+                return objectMapper.writeValueAsString(transaction).getBytes(StandardCharsets.UTF_8);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

@@ -10,6 +10,7 @@ import nyla.solutions.core.patterns.batch.BatchReport;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.patterns.conversion.io.SerializableToBytesConverter;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -17,9 +18,11 @@ import java.util.function.Supplier;
 
 import static java.lang.String.valueOf;
 
+
 public class RabbitMQPerfTest {
 
     @Test
+    @EnabledIfSystemProperty(named = "intTest", matches = "true")
     void rabbitMQ_perfTest_with_json_serialization() {
         final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -36,6 +39,7 @@ public class RabbitMQPerfTest {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "intTest", matches = "true")
     void integrationRabbitMQ_java_serialization()
     {
         rabbitPerfTest(new SerializableToBytesConverter<Transaction>());

@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,12 +33,18 @@ class RabbitMQStreamWriterTest {
     @Mock
     private Message message;
 
+    @Mock
+    private MessageBuilder.ApplicationPropertiesBuilder propertiesBuilders;
+
 
     @Test
     void given_transaction_when_write_then_publish() throws Exception {
         var list = asList(expected);
 
         when(producer.messageBuilder()).thenReturn( messageBuilder);
+        when(messageBuilder.applicationProperties()).thenReturn(propertiesBuilders);
+        when(propertiesBuilders.entry(anyString(),anyString())).thenReturn(propertiesBuilders);
+        when(propertiesBuilders.messageBuilder()).thenReturn(messageBuilder);
         when(messageBuilder.addData(any())).thenReturn(messageBuilder);
         when(messageBuilder.build()).thenReturn(message);
 
