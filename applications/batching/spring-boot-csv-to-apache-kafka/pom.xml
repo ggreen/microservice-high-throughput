@@ -6,14 +6,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.7</version>
-<!--		<version>3.0.0</version>-->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.linkedIn.learning</groupId>
-	<artifactId>transaction-services</artifactId>
+	<artifactId>spring-boot-csv-to-apache-kafka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>transaction-services</name>
-	<description>transaction-services</description>
+	<name>spring-boot-csv-to-apache-kafka</name>
+	<description>spring-boot-csv-to-apache-kafka</description>
 	<properties>
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -49,7 +48,24 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>com.linkedIn.learning</groupId>
+			<artifactId>transaction-services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

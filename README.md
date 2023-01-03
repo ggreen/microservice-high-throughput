@@ -20,7 +20,7 @@ Outline
 - Realtime Consumption
   - Spring Cloud Stream
     - Spring Cloud Stream Consumer - Rabbit Stream - Postgres
-    - Java RabbitMQ stream Producer - performance
+    - Spring Boot - RabbitMQ stream Producer - performance
   - Spring Web
     - Rest Controller Producer - Java RabbitMQ stream Producer
   - Spring Cloud Gateway

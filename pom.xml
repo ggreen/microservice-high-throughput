@@ -12,13 +12,15 @@
     <modules>
         <module>components/throughput-domain</module>
         <module>components/transaction-services</module>
-        <module>applications/transaction-batch</module>
-        <module>applications/spring-batch-cvs-to-postgres</module>
-        <module>applications/spring-batch-csv-to-rabbit-stream</module>
-        <module>applications/spring-batch-csv-to-apache-kafka</module>
-        <module>applications/spring-boot-csv-to-rabbit-stream</module>
-        <module>applications/spring-boot-csv-to-apache-kafka</module>
-        <module>applications/spring-cloud-stream-rabbit-jdbc-consumer</module>
+        <module>applications/batching/transaction-batch</module>
+        <module>applications/batching/spring-batch-cvs-to-postgres</module>
+        <module>applications/batching/spring-batch-csv-to-rabbit-stream</module>
+        <module>applications/batching/spring-batch-csv-to-apache-kafka</module>
+        <module>applications/batching/spring-boot-csv-to-rabbit-stream</module>
+        <module>applications/batching/spring-boot-csv-to-apache-kafka</module>
+        <module>applications/realtime/spring-cloud-stream-rabbit-jdbc-consumer</module>
+        <module>applications/realtime/spring-web-rabbit-stream-producer</module>
+        <module>applications/rabbit-stream-transaction-perftest</module>
     </modules>
     <build>
         <pluginManagement>
