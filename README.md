@@ -12,6 +12,7 @@ Outline
 - Batching
   - Spring Batch
     - Spring Batch - CVS to Postgres
+    - Spring Batch - CVS to Mysql
     - Spring Batch - CSV to RabbitMQ Stream
     - Spring Batch - CSV to Apache Kafka
   - Java Batching 
