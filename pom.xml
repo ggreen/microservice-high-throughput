@@ -14,6 +14,7 @@
         <module>components/transaction-services</module>
         <module>applications/batching/transaction-batch</module>
         <module>applications/batching/spring-batch-cvs-to-postgres</module>
+        <module>applications/batching/spring-batch-cvs-to-mysql</module>
         <module>applications/batching/spring-batch-csv-to-rabbit-stream</module>
         <module>applications/batching/spring-batch-csv-to-apache-kafka</module>
         <module>applications/batching/spring-boot-csv-to-rabbit-stream</module>
