@@ -29,7 +29,7 @@ public class RabbitConfig {
     private String password   = "guest";
 
     @Value("${spring.rabbitmq.host:127.0.0.1}")
-    private String hostname = "localhost";
+    private String hostname = "127.0.0.1";
 
     @Value("${spring.rabbitmq.stream.name}")
     private String streamName;
