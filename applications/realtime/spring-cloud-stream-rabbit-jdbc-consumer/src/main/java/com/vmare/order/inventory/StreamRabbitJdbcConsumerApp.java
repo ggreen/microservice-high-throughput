@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StreamRabbitJdbcApp {
+public class StreamRabbitJdbcConsumerApp {
     public static void main(String[] args) {
-        SpringApplication.run(StreamRabbitJdbcApp.class, args);
+        SpringApplication.run(StreamRabbitJdbcConsumerApp.class, args);
     }
 }

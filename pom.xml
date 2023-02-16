@@ -22,6 +22,7 @@
         <module>applications/realtime/spring-cloud-stream-rabbit-jdbc-consumer</module>
         <module>applications/realtime/spring-web-rabbit-stream-producer</module>
         <module>applications/rabbit-stream-transaction-perftest</module>
+        <module>applications/realtime/spring-web-rabbit-super-stream-producer</module>
     </modules>
     <build>
         <pluginManagement>
