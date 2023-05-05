@@ -1,0 +1,12 @@
+Kafka Latency Producer
+
+
+mean ms	0.03941964
+min ms	3.75E-4
+max ms	0.519875
+70th ms	0.0025
+90th ms	0.011209
+99.9th ms	1.030709
+99.999th ms	1.030709
+stddev ms	0.21534362787230532
+tps:33333.333333333336

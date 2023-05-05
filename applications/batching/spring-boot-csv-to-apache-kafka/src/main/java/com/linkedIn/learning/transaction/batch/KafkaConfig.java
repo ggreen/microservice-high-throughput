@@ -52,6 +52,8 @@ public class KafkaConfig {
         var props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("linger.ms", lingerMs.toString());
+        //props.put("acks", "all");
+        props.put("acks", "0");
         props.put("batch.size",String.valueOf(batchSize));
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", org.apache.kafka.common.serialization.ByteArraySerializer.class.getName());
