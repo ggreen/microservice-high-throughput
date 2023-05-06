@@ -17,61 +17,24 @@ where job_execution_id =
 
 Clean up table
 
-```roomsql
-truncate ms_transactions ;
-```
-
-
-# Runs
-## Postgres Chunk Size 10 - 8 threads
-
-
-- First run about 13K TPS
-- Second/Three about 16K TPS
-
-```
-(select max(job_execution_id) from batch_job_execution);
- job_execution_id |  total_time  |        tps         
-------------------+--------------+--------------------
-                9 | 00:02:01.508 | 16459.821575534121
-
-```
-
-## Postgres Chunk Size 10000 - 8 threads
-
-```
- job_execution_id |  total_time  |        tps         
-------------------+--------------+--------------------
-               11 | 00:00:44.595 | 44848.077138692679
-```
-
-
-## Postgres Chunk Size 100000 - 8 threads
-
-```text
- job_execution_id |  status   |  total_time  |   tps   
-------------------+-----------+--------------+---------
-               31 | COMPLETED | 00:00:16.064 | 124,502
-```
-
-## Postgres Chunk Size 300000 - 8 threads
-
-
-```text
- job_execution_id |  status   |  total_time  |   tps   
-------------------+-----------+--------------+---------
-               39 | COMPLETED | 00:00:15.204 | 131,544
-```
-
-
 ------------------
+Spring Batch version 2.7
+Java version 17
 
-## RabbitMQ Streams
+---------
+
+# Apache Kafka (1 ACKS)
 
 
-```text
-(select max(job_execution_id) from batch_job_execution);
-job_execution_id |  status   |  total_time  |   tps   
-------------------+-----------+--------------+---------
-6 | COMPLETED | 00:00:13.267 | 150,750
-```
+- CSV lines=2,000,000
+- batch.chunk.size=700000
+- thread count=1
+- spring.kafka.producer.acks=1
+- Completion time 28.8 seconds
+
+Kafka  version kafka_2.13-3.4.0
+
+
+| total_time   | tps      |
+|--------------|----------|
+| 00:00:28.333 |  70,589   |

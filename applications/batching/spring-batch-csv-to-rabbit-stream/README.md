@@ -69,9 +69,9 @@ truncate ms_transactions ;
 ## RabbitMQ Streams
 
 
-```text
-(select max(job_execution_id) from batch_job_execution);
-job_execution_id |  status   |  total_time  |   tps   
-------------------+-----------+--------------+---------
-6 | COMPLETED | 00:00:13.267 | 150,750
-```
+Single Threaded Spring Batch
+
+job_execution_id |  status   |  total_time  |  tps   
+------------------+-----------+--------------+--------
+16 | COMPLETED | 00:00:25.543 | 78,299
+
