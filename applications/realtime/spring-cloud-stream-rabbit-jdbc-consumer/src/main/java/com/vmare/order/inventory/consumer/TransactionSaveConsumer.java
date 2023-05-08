@@ -1,6 +1,6 @@
 package com.vmare.order.inventory.consumer;
 
-import com.linkedIn.learning.throughput.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Transaction;
 import com.vmare.order.inventory.repository.TransactionJdbcRepository;
 import org.springframework.stereotype.Component;
 

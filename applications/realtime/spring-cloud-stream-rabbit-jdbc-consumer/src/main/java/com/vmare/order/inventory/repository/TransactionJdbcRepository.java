@@ -1,18 +1,12 @@
 package com.vmare.order.inventory.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.linkedIn.learning.throughput.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Transaction;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.util.Map;
-import java.util.Optional;
 
 import static nyla.solutions.core.util.Organizer.toMap;
 

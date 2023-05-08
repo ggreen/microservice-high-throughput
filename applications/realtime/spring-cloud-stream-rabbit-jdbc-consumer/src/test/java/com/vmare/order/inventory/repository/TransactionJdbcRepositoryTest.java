@@ -1,6 +1,6 @@
 package com.vmare.order.inventory.repository;
 
-import com.linkedIn.learning.throughput.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Transaction;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

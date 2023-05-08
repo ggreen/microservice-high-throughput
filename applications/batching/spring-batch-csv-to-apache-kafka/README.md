@@ -1,4 +1,10 @@
 
+
+```shell
+java -Xms5g -Xmx5g -jar applications/batching/spring-batch-csv-to-apache-kafka/target/spring-batch-csv-to-apache-kafka-0.0.1-SNAPSHOT.jar
+```
+
+
 Report on 
 
 job_execution_id |  status   | total_time  |   tps
