@@ -75,3 +75,11 @@ job_execution_id |  status   |  total_time  |  tps
 ------------------+-----------+--------------+--------
 16 | COMPLETED | 00:00:25.543 | 78,299
 
+job_execution_id |  status   |  total_time  |  tps   
+------------------+-----------+--------------+--------
+30 | COMPLETED | 00:00:24.732 | 80,867
+
+(select max(job_execution_id) from batch_job_execution);
+job_execution_id |  status   | total_time  |  tps   
+------------------+-----------+-------------+--------
+31 | COMPLETED | 00:00:24.97 | 80,096

@@ -1,7 +1,7 @@
 # Spring Batch RabbitMQ version
 
 The following is a summary of a local RabbitMQ Streams 
-verses Apacha Kafka performance test.
+verses Apache Kafka performance test.
 
 This example was ran on a single developer laptop.
 It uses Spring Batch for boot version: 2.7.11.
@@ -17,7 +17,7 @@ It uses Spring Batch for boot version: 2.7.11.
 ## Processing CSV
 
 The application uses the Spring Batch FlatFileItemReader to read
-CSV records to convert to a Transaction domain object.
+CSV records to convert to a Transaction domain object using the Jackson JSON API.
 
 Transaction Domain record
 
@@ -25,23 +25,7 @@ Transaction Domain record
 public record Transaction(String id, String details,String contact, String location, double amount, Timestamp timestamp)
         implements Serializable {
 }
-
 ```
-
-
-- 2,000,000 lines see 
--  ~80 Characters per line
-- Single Threaded Processing
-- Producers do not use acknowledgements
-
-RabbitMQ - 3.11.12 - RabbitMQ Streams
-- throughput per seconds: 544.3658138268917
-
-Kafka  kafka_2.13-3.4.0
-- throughput per seconds: 453.30915684496824
-
-Improvement: RabbitMQ stream had a 20.09% increase
-
 
 ------------------
 Spring Batch version 2.7
@@ -49,17 +33,14 @@ Java version 17
 
 # RabbitMQ Stream
 
-
 - CSV lines=2,000,000
 - batch.chunk.size=700000
 - thread count=1
-- Completion time 25.5 seconds
--
 
 
 | total_time   | tps      |
 |--------------|----------|
-| 00:00:25.543 | 78,299   |
+| 00:00:24.97 |  80,096  |
 
 
 ---------
@@ -71,17 +52,17 @@ Java version 17
 - batch.chunk.size=700000
 - thread count=1
 - spring.kafka.producer.acks=1
-- Completion time 28.8 seconds
 
 Kafka  version kafka_2.13-3.4.0
 
 
 | total_time   | tps      |
 |--------------|----------|
-| 00:00:28.333 |  70,589   |
+| 00:00:27.005 |  74,060   |
 
 
-RabbitMQ streams had RabbitMQ streams had 10.92% increase in TPS
+
+RabbitMQ stream had an approximately 8% improvement over Apache Kafka
 
 
 
@@ -274,21 +255,22 @@ public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
     private final Producer producer;
     private final Converter<Transaction,byte[]> serializer;
     private final ConfirmationHandler handler;
+    private static final AtomicLong count = new AtomicLong();
 
     public RabbitMQStreamWriter(Producer producer, Converter<Transaction,byte[]> serializer) {
         this.producer = producer;
         this.serializer = serializer;
-
-        this.handler = confirmationStatus -> {};
+        //Publish Confirm with an atomic long
+        this.handler = confirmationStatus -> {count.addAndGet(1);};
     }
 
     @Override
     public void write(List<? extends Transaction> items) throws Exception {
         items.forEach(transaction ->
-                        producer.send(producer.messageBuilder()
-                                        .applicationProperties().entry("contentType",
-                                        "application/json").messageBuilder()
-                                .addData(serializer.convert(transaction)).build(),handler));
+                producer.send(producer.messageBuilder()
+                        .applicationProperties().entry("contentType",
+                                "application/json").messageBuilder()
+                        .addData(serializer.convert(transaction)).build(),handler));
     }
 }
 ```
