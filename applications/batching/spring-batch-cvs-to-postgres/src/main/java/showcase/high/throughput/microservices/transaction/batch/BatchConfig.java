@@ -1,5 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
+import org.springframework.core.io.UrlResource;
 import showcase.high.throughput.microservices.domain.Transaction;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -27,6 +28,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.net.MalformedURLException;
 
 @Configuration
 @EnableBatchProcessing
@@ -43,15 +45,14 @@ public class BatchConfig {
     private int corePoolSize;
 
     @Bean
-    FlatFileItemReader reader()
-    {
+    FlatFileItemReader reader() throws MalformedURLException {
        return  new FlatFileItemReaderBuilder<Transaction>()
                .name("transactionReader")
                .linesToSkip(1) //skip header
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
                .fieldSetMapper(new RecordFieldSetMapper<Transaction>(Transaction.class))
-               .resource(new FileSystemResource(fileLocation))
+               .resource(new UrlResource(fileLocation))
                .build();
     }
 
@@ -95,7 +96,7 @@ public class BatchConfig {
     public Step step1(ItemWriter<Transaction> writer,
                       JobRepository jobRepository,
                       PlatformTransactionManager transactionManager,
-                      ThreadPoolTaskExecutor taskExecutor) {
+                      ThreadPoolTaskExecutor taskExecutor) throws MalformedURLException {
 
         taskExecutor.setCorePoolSize(corePoolSize);
 

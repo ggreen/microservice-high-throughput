@@ -64,20 +64,20 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
-    JobExecutionListener listener(JdbcTemplate jdbcTemplate)
-    {
-        return new JobExecutionListener() {
-            @Override
-            public void beforeJob(JobExecution jobExecution) {
-                jdbcTemplate.update("truncate ms_transactions");
-            }
-
-            @Override
-            public void afterJob(JobExecution jobExecution) {
-            }
-        };
-    }
+//    @Bean
+//    JobExecutionListener listener(JdbcTemplate jdbcTemplate)
+//    {
+//        return new JobExecutionListener() {
+//            @Override
+//            public void beforeJob(JobExecution jobExecution) {
+//                jdbcTemplate.update("truncate ms_transactions");
+//            }
+//
+//            @Override
+//            public void afterJob(JobExecution jobExecution) {
+//            }
+//        };
+//    }
     @Bean
     public Step step1(ItemWriter<Transaction> writer,
                       JobRepository jobRepository,

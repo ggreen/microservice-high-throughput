@@ -8,6 +8,15 @@ My SQL list databases
 ```
 
 
+Create database
+
+```roomsql
+CREATE TABLE ms_transactions  (
+    id VARCHAR(20) NOT NULL PRIMARY KEY,
+    details VARCHAR(20) NOT NULL
+)  ENGINE=InnoDB;
+```
+
 
 Report on 
 

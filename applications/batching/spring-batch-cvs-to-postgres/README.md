@@ -4,11 +4,13 @@ Report on
 job_execution_id |  status   | total_time  |   tps
 
 
+Postgres
 ```roomsql
 select job.job_execution_id, job.status, job.end_time - job.start_time as total_time,
      to_char(
      ( select step.write_count from batch_step_execution step where step.job_execution_id= job.job_execution_id)
-     /(extract(epoch from end_time)  - extract(epoch from start_time)),'FM9,999,999') as tps
+     /(extract(epoch from end_time)  - extract(epoch from start_time)),'FM9,999,999') as tps,
+     ( select step.write_count from batch_step_execution step where step.job_execution_id= job.job_execution_id) total_cnt
 from batch_job_execution job
 where job_execution_id =
 (select max(job_execution_id) from batch_job_execution);
