@@ -1,6 +1,9 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.Producer;
@@ -21,10 +24,6 @@ public class RabbitConfig {
     private String streamName;
 
 
-    @Value("${rabbitmq.stream.producer.batch.size:500}")
-    private int batchSize;
-
-
     @Primary
     @Bean
     ObjectMapper objectMapper()
@@ -38,24 +37,39 @@ public class RabbitConfig {
         return mapper;
     }
 
+//    @Bean
+//    Environment rabbitEnv()
+//    {
+//        var env = Environment.builder().build();
+//        env.streamCreator().stream(streamName).create();
+//
+//        try{ env.deleteStream(streamName); } catch (Exception e){}
+//        env.streamCreator().stream(streamName).create();
+//
+//        return env;
+//    }
+
+
     @Bean
-    Environment rabbitEnv()
-    {
-        var env = Environment.builder().build();
-        env.streamCreator().stream(streamName).create();
+    RabbitStreamTemplate streamTemplate(Environment env, MessageConverter messageConverter) {
+        var template = new RabbitStreamTemplate(env, streamName);
+        template.setProducerCustomizer((name, builder) -> builder.name("test"));
 
-        try{ env.deleteStream(streamName); } catch (Exception e){}
-        env.streamCreator().stream(streamName).create();
-
-        return env;
+        template.setMessageConverter(messageConverter);
+        return template;
     }
 
-
     @Bean
-    Producer producer(Environment environment)
+    MessageConverter messageConverter()
     {
-        return environment.producerBuilder().stream(streamName)
-                //.batchSize(batchSize)
-                .build();
+        return new Jackson2JsonMessageConverter();
     }
+
+//    @Bean
+//    Producer producer(Environment environment)
+//    {
+//        return environment.producerBuilder().stream(streamName)
+//                //.batchSize(batchSize)
+//                .build();
+//    }
 }

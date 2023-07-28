@@ -53,6 +53,7 @@ public class RabbitConfig {
     Producer producer(Environment environment)
     {
         return environment.producerBuilder().stream(streamName)
+                .batchSize(batchSize)
                 //.batchSize(batchSize)
                 .build();
     }

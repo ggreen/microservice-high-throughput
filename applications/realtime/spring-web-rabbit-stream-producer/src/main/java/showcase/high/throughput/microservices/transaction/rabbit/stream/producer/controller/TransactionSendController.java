@@ -1,23 +1,23 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
-import showcase.high.throughput.microservices.domain.Transaction;
-import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
-import com.rabbitmq.stream.Producer;
+import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 
 @RestController
 @RequestMapping("transactions")
 public class TransactionSendController {
 
-    private final Producer producer;
+    private final RabbitStreamTemplate producer;
     private final TransactionToJsonBytesConverter converter;
     private String contentType = "contentType";
     private String jsonContentType = "application/json";
 
-    public TransactionSendController(Producer producer, TransactionToJsonBytesConverter converter) {
+    public TransactionSendController(RabbitStreamTemplate producer, TransactionToJsonBytesConverter converter) {
         this.producer = producer;
         this.converter = converter;
     }
@@ -26,9 +26,11 @@ public class TransactionSendController {
     @RequestMapping("transaction")
     void sendTransaction(@RequestBody Transaction transaction)
     {
-                producer.send(producer.messageBuilder().applicationProperties()
-                        .entry(contentType,jsonContentType).messageBuilder()
-                        .addData(converter.convert(transaction)).build(),h -> {});
+        producer.convertAndSend(transaction);
     }
+//                producer.send(producer.messageBuilder().properties()
+//                        .contentType(jsonContentType).messageBuilder()
+//                        .addData(converter.convert(transaction)).build(),h -> {});
+//    }
 
 }

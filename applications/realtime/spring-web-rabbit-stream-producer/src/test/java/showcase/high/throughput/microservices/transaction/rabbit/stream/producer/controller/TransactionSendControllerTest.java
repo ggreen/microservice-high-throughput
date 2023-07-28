@@ -1,5 +1,6 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
+import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
 import showcase.high.throughput.microservices.domain.Transaction;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Message;
@@ -23,7 +24,7 @@ class TransactionSendControllerTest {
     private TransactionToJsonBytesConverter converter;
 
     @Mock
-    private Producer producer;
+    private RabbitStreamTemplate producer;
 
     @Mock
     private MessageBuilder builder;
@@ -45,16 +46,9 @@ class TransactionSendControllerTest {
     @Test
     void send() {
 
-        when(producer.messageBuilder()).thenReturn(builder);
-        when(builder.addData(any())).thenReturn(builder);
-        when(builder.applicationProperties()).thenReturn(properties);
-        when(properties.entry(anyString(),anyString())).thenReturn(properties);
-        when(properties.messageBuilder()).thenReturn(builder);
-        when(builder.build()).thenReturn(message);
-
         int count = 10;
         subject.sendTransaction(transaction);
 
-        verify(producer).send(any(),any());
+        verify(producer).convertAndSend(any());
     }
 }
