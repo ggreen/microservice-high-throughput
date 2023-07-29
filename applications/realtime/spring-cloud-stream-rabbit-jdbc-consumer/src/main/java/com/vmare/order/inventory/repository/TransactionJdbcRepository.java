@@ -22,7 +22,7 @@ public class TransactionJdbcRepository {
     @SneakyThrows
     public void save(Transaction transaction) {
         var sql = """
-                INSERT INTO ms_transactions (id, details) 
+                INSERT INTO payment.payments (id, details) 
                 VALUES (?, ?) 
                 """;
 

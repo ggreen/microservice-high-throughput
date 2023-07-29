@@ -37,17 +37,17 @@ public class RabbitConfig {
         return mapper;
     }
 
-//    @Bean
-//    Environment rabbitEnv()
-//    {
-//        var env = Environment.builder().build();
-//        env.streamCreator().stream(streamName).create();
-//
-//        try{ env.deleteStream(streamName); } catch (Exception e){}
-//        env.streamCreator().stream(streamName).create();
-//
-//        return env;
-//    }
+    @Bean
+    Environment rabbitEnv()
+    {
+        var env = Environment.builder().build();
+        env.streamCreator().stream(streamName).create();
+
+        try{ env.deleteStream(streamName); } catch (Exception e){}
+        env.streamCreator().stream(streamName).create();
+
+        return env;
+    }
 
 
     @Bean

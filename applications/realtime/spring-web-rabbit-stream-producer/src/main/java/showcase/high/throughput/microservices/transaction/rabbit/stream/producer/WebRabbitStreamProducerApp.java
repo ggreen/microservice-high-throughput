@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RabbitStreamProducerApp {
+public class WebRabbitStreamProducerApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RabbitStreamProducerApp.class, args);
+		SpringApplication.run(WebRabbitStreamProducerApp.class, args);
 	}
 
 }
