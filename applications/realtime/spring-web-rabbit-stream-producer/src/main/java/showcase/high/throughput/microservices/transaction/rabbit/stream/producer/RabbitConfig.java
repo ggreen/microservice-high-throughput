@@ -1,17 +1,18 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rabbitmq.stream.Environment;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
-import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
-import com.rabbitmq.stream.Environment;
-import com.rabbitmq.stream.Producer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
+import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,16 +38,22 @@ public class RabbitConfig {
         return mapper;
     }
 
+//    @Bean
+//    Environment rabbitEnv()
+//    {
+//        var env = Environment.builder().build();
+////        env.streamCreator().stream(streamName).create();
+//
+////        try{ env.deleteStream(streamName); } catch (Exception e){}
+////        env.streamCreator().stream(streamName).create();
+//
+//        return env;
+//    }
+
     @Bean
-    Environment rabbitEnv()
+    Queue queueStream()
     {
-        var env = Environment.builder().build();
-        env.streamCreator().stream(streamName).create();
-
-        try{ env.deleteStream(streamName); } catch (Exception e){}
-        env.streamCreator().stream(streamName).create();
-
-        return env;
+        return QueueBuilder.durable(streamName).stream().build();
     }
 
 

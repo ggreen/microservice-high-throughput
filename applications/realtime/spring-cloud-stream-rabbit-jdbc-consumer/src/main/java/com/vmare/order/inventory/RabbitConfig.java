@@ -2,18 +2,15 @@ package com.vmare.order.inventory;
 
 
 import com.rabbitmq.stream.Environment;
-import com.rabbitmq.stream.OffsetSpecification;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
-import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.stream.config.ListenerContainerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.rabbit.stream.listener.StreamListenerContainer;
 
 @Slf4j
 @Configuration
@@ -56,26 +53,33 @@ public class RabbitConfig {
                 .clientProperty("id",applicationName)
                 .build();
 
-        env.streamCreator().stream(streamName).create();
+//        env.streamCreator().stream(streamName).create();
 
         return env;
     }
 
     @Bean
-    @ConditionalOnProperty(name = "rabbitmq.streaming.replay",havingValue = "true")
-    ListenerContainerCustomizer<MessageListenerContainer> customizer() {
-        return ( MessageListenerContainer cont, String dest, String group) ->
-        {
-            if(!(cont instanceof StreamListenerContainer))
-                return;
-
-            final StreamListenerContainer container = StreamListenerContainer.class.cast(cont);
-
-            log.info("Replaying, setting offset to first the record for streams");
-            container.setConsumerCustomizer( (name, builder) -> {
-                builder.offset(OffsetSpecification.first());
-            });
-        };
+    Queue stream() {
+        return QueueBuilder.durable(streamName)
+                .stream()
+                .build();
     }
+
+//    @Bean
+//    @ConditionalOnProperty(name = "rabbitmq.streaming.replay",havingValue = "true")
+//    ListenerContainerCustomizer<MessageListenerContainer> customizer() {
+//        return ( MessageListenerContainer cont, String dest, String group) ->
+//        {
+//            if(!(cont instanceof StreamListenerContainer))
+//                return;
+//
+//            final StreamListenerContainer container = StreamListenerContainer.class.cast(cont);
+//
+//            log.info("Replaying, setting offset to first the record for streams");
+//            container.setConsumerCustomizer( (name, builder) -> {
+//                builder.offset(OffsetSpecification.first());
+//            });
+//        };
+//    }
 
 }
