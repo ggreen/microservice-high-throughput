@@ -9,7 +9,7 @@ import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 
 @RestController
-@RequestMapping("transactions")
+@RequestMapping("payments")
 public class PaymentSendController {
 
     private final RabbitStreamTemplate producer;
