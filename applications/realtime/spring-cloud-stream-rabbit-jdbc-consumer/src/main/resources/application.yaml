@@ -26,19 +26,19 @@ spring:
     change-log: "classpath:db/changelog/changelog-v1.sql"
   cloud:
     function:
-      definition: transactionSaveConsumer
+      definition: paymentSaveConsumer
     stream:
       default:
         contentType: "application/json"
       bindings:
-        transactionSaveConsumer-in-0:
-          destination: throughput.transaction
-          group: transaction
+        paymentSaveConsumer-in-0:
+          destination: throughput.payment
+          group: payment
           consumer:
             concurrency: 1
       rabbit:
         bindings:
-          transactionSaveConsumer-in-0:
+          paymentSaveConsumer-in-0:
             consumer:
               autoBindDlq: true
 #              quorum.enabled: true
@@ -50,4 +50,4 @@ spring:
               prefetch: 10000
   rabbitmq:
     stream:
-      name: transaction
+      name: payment
