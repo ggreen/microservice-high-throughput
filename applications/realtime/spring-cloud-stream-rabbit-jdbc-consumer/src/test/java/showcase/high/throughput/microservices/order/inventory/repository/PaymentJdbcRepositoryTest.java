@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 class PaymentJdbcRepositoryTest {
 
     @Mock
-    private TransactionJdbcRepository subject;
+    private PaymentJdbcRepository subject;
     @Mock
     private JdbcTemplate template;
 
@@ -27,7 +27,7 @@ class PaymentJdbcRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        subject = new TransactionJdbcRepository(template);
+        subject = new PaymentJdbcRepository(template);
     }
 
     @Test

@@ -11,7 +11,7 @@ import showcase.high.throughput.microservices.domain.Payment;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class TransactionJdbcRepository {
+public class PaymentJdbcRepository {
 
     private final JdbcTemplate template;
     private ObjectMapper objectMapper = new ObjectMapper();

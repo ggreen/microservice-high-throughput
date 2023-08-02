@@ -1,7 +1,7 @@
 package showcase.high.throughput.microservices.order.inventory.consumer;
 
 import showcase.high.throughput.microservices.domain.Payment;
-import showcase.high.throughput.microservices.order.inventory.repository.TransactionJdbcRepository;
+import showcase.high.throughput.microservices.order.inventory.repository.PaymentJdbcRepository;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 class PaymentSaveConsumerTest {
 
       @Mock
-      private TransactionJdbcRepository repository;
+      private PaymentJdbcRepository repository;
 
       @Mock
       private PaymentSaveConsumer subject;
