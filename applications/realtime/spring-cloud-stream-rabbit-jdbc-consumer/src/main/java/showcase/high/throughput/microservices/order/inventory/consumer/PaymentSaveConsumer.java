@@ -1,16 +1,16 @@
-package com.vmare.order.inventory.consumer;
+package showcase.high.throughput.microservices.order.inventory.consumer;
 
 import showcase.high.throughput.microservices.domain.Transaction;
-import com.vmare.order.inventory.repository.TransactionJdbcRepository;
+import showcase.high.throughput.microservices.order.inventory.repository.TransactionJdbcRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
 @Component
-public class TransactionSaveConsumer implements Consumer<Transaction> {
+public class PaymentSaveConsumer implements Consumer<Transaction> {
     private final TransactionJdbcRepository repository;
 
-    public TransactionSaveConsumer(TransactionJdbcRepository repository) {
+    public PaymentSaveConsumer(TransactionJdbcRepository repository) {
         this.repository = repository;
     }
 

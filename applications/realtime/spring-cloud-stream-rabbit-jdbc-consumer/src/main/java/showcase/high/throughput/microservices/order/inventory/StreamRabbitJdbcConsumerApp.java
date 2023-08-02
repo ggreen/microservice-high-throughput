@@ -1,4 +1,4 @@
-package com.vmare.order.inventory;
+package showcase.high.throughput.microservices.order.inventory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

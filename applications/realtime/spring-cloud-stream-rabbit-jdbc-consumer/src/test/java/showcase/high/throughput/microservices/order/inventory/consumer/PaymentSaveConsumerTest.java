@@ -1,7 +1,7 @@
-package com.vmare.order.inventory.consumer;
+package showcase.high.throughput.microservices.order.inventory.consumer;
 
 import showcase.high.throughput.microservices.domain.Transaction;
-import com.vmare.order.inventory.repository.TransactionJdbcRepository;
+import showcase.high.throughput.microservices.order.inventory.repository.TransactionJdbcRepository;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,19 +12,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class TransactionSaveConsumerTest {
+class PaymentSaveConsumerTest {
 
       @Mock
       private TransactionJdbcRepository repository;
 
       @Mock
-      private TransactionSaveConsumer subject;
+      private PaymentSaveConsumer subject;
       private Transaction expected = JavaBeanGeneratorCreator.of(Transaction.class).create();
 
       @Test
       void given_TransactionJdbcRepository_when_save_then_when_read_you_have_TransactionJdbcRepository_returned() {
 
-          subject = new TransactionSaveConsumer(repository);
+          subject = new PaymentSaveConsumer(repository);
 
           subject.accept(expected);
 

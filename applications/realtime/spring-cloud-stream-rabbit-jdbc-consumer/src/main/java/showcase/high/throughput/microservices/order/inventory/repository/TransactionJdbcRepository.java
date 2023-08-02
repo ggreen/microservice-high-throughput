@@ -1,4 +1,4 @@
-package com.vmare.order.inventory.repository;
+package showcase.high.throughput.microservices.order.inventory.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.vmare.order.inventory.repository;
+package showcase.high.throughput.microservices.order.inventory.repository;
 
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
