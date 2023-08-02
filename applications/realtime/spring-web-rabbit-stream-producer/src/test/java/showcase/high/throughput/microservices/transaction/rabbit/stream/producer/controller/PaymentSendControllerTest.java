@@ -31,14 +31,14 @@ class PaymentSendControllerTest {
 
     @Mock
     private Message message;
-    private TransactionSendController subject;
+    private PaymentSendController subject;
     private int workerCount = 3;
     private Payment transaction = JavaBeanGeneratorCreator.of(Payment.class).create();
 
 
     @BeforeEach
     void setUp() {
-        subject = new TransactionSendController(producer, converter);
+        subject = new PaymentSendController(producer, converter);
     }
 
     @Test

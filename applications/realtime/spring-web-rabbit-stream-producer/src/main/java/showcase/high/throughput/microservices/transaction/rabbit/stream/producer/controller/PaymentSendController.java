@@ -10,14 +10,14 @@ import showcase.high.throughput.microservices.transaction.batch.mapping.Transact
 
 @RestController
 @RequestMapping("transactions")
-public class TransactionSendController {
+public class PaymentSendController {
 
     private final RabbitStreamTemplate producer;
     private final TransactionToJsonBytesConverter converter;
     private String contentType = "contentType";
     private String jsonContentType = "application/json";
 
-    public TransactionSendController(RabbitStreamTemplate producer, TransactionToJsonBytesConverter converter) {
+    public PaymentSendController(RabbitStreamTemplate producer, TransactionToJsonBytesConverter converter) {
         this.producer = producer;
         this.converter = converter;
     }
@@ -28,9 +28,5 @@ public class TransactionSendController {
     {
         producer.convertAndSend(transaction);
     }
-//                producer.send(producer.messageBuilder().properties()
-//                        .contentType(jsonContentType).messageBuilder()
-//                        .addData(converter.convert(transaction)).build(),h -> {});
-//    }
 
 }
