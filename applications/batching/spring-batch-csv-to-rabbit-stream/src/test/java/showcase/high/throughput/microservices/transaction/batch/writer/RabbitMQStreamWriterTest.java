@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch.writer;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import com.rabbitmq.stream.Message;
 import com.rabbitmq.stream.MessageBuilder;
 import com.rabbitmq.stream.Producer;
@@ -26,9 +26,9 @@ class RabbitMQStreamWriterTest {
 
     @Mock
     private MessageBuilder messageBuilder;
-    private Transaction expected = JavaBeanGeneratorCreator.of(Transaction.class).create();
+    private Payment expected = JavaBeanGeneratorCreator.of(Payment.class).create();
     @Mock
-    private Converter<Transaction,byte[]> serializer;
+    private Converter<Payment,byte[]> serializer;
 
     @Mock
     private Message message;

@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch.mapping;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import nyla.solutions.core.patterns.conversion.Converter;
 import org.springframework.stereotype.Component;
 
@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Component
-public class CsvToTransactionConverter implements Converter<List<String>, Transaction> {
+public class CsvToTransactionConverter implements Converter<List<String>, Payment> {
     @Override
-    public Transaction convert(List<String> csvRow) {
-        return new Transaction(
+    public Payment convert(List<String> csvRow) {
+        return new Payment(
                 csvRow.get(0), //id
                 csvRow.get(1), //detials
                 csvRow.get(2), //contact

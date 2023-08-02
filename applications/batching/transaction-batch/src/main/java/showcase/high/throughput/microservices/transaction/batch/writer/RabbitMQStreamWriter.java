@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch.writer;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import com.rabbitmq.stream.ConfirmationHandler;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @Component
 @ConditionalOnProperty(name = "stream",havingValue = "true")
-public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
+public class RabbitMQStreamWriter implements ItemWriter<Payment> {
 
     private final Producer producer;
-    private final Converter<Transaction,byte[]> serializer;
+    private final Converter<Payment,byte[]> serializer;
     private final ConfirmationHandler handler;
 
-    public RabbitMQStreamWriter(Producer producer, Converter<Transaction,byte[]> serializer) {
+    public RabbitMQStreamWriter(Producer producer, Converter<Payment,byte[]> serializer) {
         this.producer = producer;
         this.serializer = serializer;
 
@@ -34,7 +34,7 @@ public class RabbitMQStreamWriter implements ItemWriter<Transaction> {
 //    }
 
     @Override
-    public void write(List<? extends Transaction> items) throws Exception {
+    public void write(List<? extends Payment> items) throws Exception {
         items.forEach(transaction ->
                         producer.send(producer.messageBuilder()
                                 .addData(serializer.convert(transaction)).build(),handler));

@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch.runner;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import lombok.extern.slf4j.Slf4j;
 import nyla.solutions.core.patterns.batch.BatchJob;
 import nyla.solutions.core.patterns.batch.BatchReport;
@@ -16,13 +16,13 @@ import java.util.function.Supplier;
 @Slf4j
 @Component
 public class BatchJobRunner implements ApplicationRunner {
-    private final Supplier<Transaction> supplier;
-    private final Consumer<List<Transaction>> consumer;
+    private final Supplier<Payment> supplier;
+    private final Consumer<List<Payment>> consumer;
 
     private final int batchChunkSize;
 
-    public BatchJobRunner(Supplier<Transaction> supplier,
-                          Consumer<List<Transaction>> consumer,
+    public BatchJobRunner(Supplier<Payment> supplier,
+                          Consumer<List<Payment>> consumer,
                           @Value("${batch.chunk.size}")
                           int batchChunkSize) {
         this.supplier = supplier;

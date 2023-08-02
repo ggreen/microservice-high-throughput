@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.creational.generator.FullNameCreator;
@@ -40,7 +40,7 @@ public class TransactionPerfTestController {
         List<Future> futures = new ArrayList<>();
         
         for (int i = 0; i < count; i++) {
-            var transaction = new Transaction(prefix+i,
+            var transaction = new Payment(prefix+i,
                     "details-"+prefix+i,
                     fullNameCreator.create(),
                     zipcodes[i%zipcodes.length],

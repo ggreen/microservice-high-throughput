@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.CsvToTransactionConverter;
 import showcase.high.throughput.microservices.transaction.batch.runner.BatchJobRunner;
 import nyla.solutions.core.io.csv.CsvReader;
@@ -26,7 +26,7 @@ public class BatchConfig {
         return new CsvReader(Paths.get(filePath).toFile());
     }
     @Bean
-    Supplier<Transaction> supplier(CsvReader reader, CsvToTransactionConverter converter)
+    Supplier<Payment> supplier(CsvReader reader, CsvToTransactionConverter converter)
     {
         var supplier= new CsvConverterSupplier(reader,converter);
         supplier.skipLines(1);

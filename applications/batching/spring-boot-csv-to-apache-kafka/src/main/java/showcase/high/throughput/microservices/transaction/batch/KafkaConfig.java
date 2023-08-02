@@ -1,7 +1,7 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.admin.Admin;
@@ -64,7 +64,7 @@ public class KafkaConfig {
 
 
     @Bean
-    Consumer<List<Transaction>> consumers(Producer<String, byte[]> producer, TransactionToJsonBytesConverter converter) {
+    Consumer<List<Payment>> consumers(Producer<String, byte[]> producer, TransactionToJsonBytesConverter converter) {
         return transactions -> {
 
             transactions.forEach(transaction -> {

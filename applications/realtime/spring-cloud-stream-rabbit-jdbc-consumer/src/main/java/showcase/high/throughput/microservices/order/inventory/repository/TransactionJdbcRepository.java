@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 
 @Repository
 @Slf4j
@@ -18,7 +18,7 @@ public class TransactionJdbcRepository {
 
 
     @SneakyThrows
-    public void save(Transaction transaction) {
+    public void save(Payment transaction) {
         var sql = """
                 INSERT INTO payment.payments (id, details,
                 contact,location, amount, timestamp) 

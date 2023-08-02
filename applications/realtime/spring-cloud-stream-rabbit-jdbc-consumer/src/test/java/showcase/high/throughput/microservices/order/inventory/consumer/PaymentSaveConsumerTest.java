@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.order.inventory.consumer;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.order.inventory.repository.TransactionJdbcRepository;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class PaymentSaveConsumerTest {
 
       @Mock
       private PaymentSaveConsumer subject;
-      private Transaction expected = JavaBeanGeneratorCreator.of(Transaction.class).create();
+      private Payment expected = JavaBeanGeneratorCreator.of(Payment.class).create();
 
       @Test
       void given_TransactionJdbcRepository_when_save_then_when_read_you_have_TransactionJdbcRepository_returned() {
@@ -28,6 +28,6 @@ class PaymentSaveConsumerTest {
 
           subject.accept(expected);
 
-          verify(this.repository).save(any(Transaction.class));
+          verify(this.repository).save(any(Payment.class));
       }
 }

@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Message;
 import com.rabbitmq.stream.MessageBuilder;
@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TransactionSendControllerTest {
+class PaymentSendControllerTest {
 
     @Mock
     private TransactionToJsonBytesConverter converter;
@@ -39,7 +39,7 @@ class TransactionSendControllerTest {
 
     private TransactionSendController subject;
     private int workerCount = 3;
-    private Transaction transaction = JavaBeanGeneratorCreator.of(Transaction.class).create();
+    private Payment transaction = JavaBeanGeneratorCreator.of(Payment.class).create();
 
     @BeforeEach
     void setUp() {

@@ -8,21 +8,21 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class TransactionJdbcRepositoryTest {
+class PaymentJdbcRepositoryTest {
 
     @Mock
     private TransactionJdbcRepository subject;
     @Mock
     private JdbcTemplate template;
 
-    private final Transaction order = JavaBeanGeneratorCreator.of(Transaction.class).create();
+    private final Payment order = JavaBeanGeneratorCreator.of(Payment.class).create();
 
 
     @BeforeEach

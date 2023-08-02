@@ -2,7 +2,7 @@ package showcase.high.throughput.microservices.transaction.batch;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.conversion.Converter;
@@ -38,7 +38,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    Converter<Transaction,byte[]> serializer(ObjectMapper objectMapper)
+    Converter<Payment,byte[]> serializer(ObjectMapper objectMapper)
     {
         return transaction -> {
             try {

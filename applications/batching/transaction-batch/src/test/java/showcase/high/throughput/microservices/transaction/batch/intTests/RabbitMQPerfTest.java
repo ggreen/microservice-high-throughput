@@ -2,7 +2,7 @@ package showcase.high.throughput.microservices.transaction.batch.intTests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import com.rabbitmq.stream.Environment;
 import com.rabbitmq.stream.Producer;
 import nyla.solutions.core.patterns.batch.BatchJob;
@@ -26,7 +26,7 @@ public class RabbitMQPerfTest {
     void rabbitMQ_perfTest_with_json_serialization() {
         final ObjectMapper objectMapper = new ObjectMapper();
 
-        Converter<Transaction, byte[]> converter = transaction ->
+        Converter<Payment, byte[]> converter = transaction ->
         {
             try {
                 return objectMapper.writeValueAsBytes(transaction);
@@ -42,10 +42,10 @@ public class RabbitMQPerfTest {
     @EnabledIfSystemProperty(named = "intTest", matches = "true")
     void integrationRabbitMQ_java_serialization()
     {
-        rabbitPerfTest(new SerializableToBytesConverter<Transaction>());
+        rabbitPerfTest(new SerializableToBytesConverter<Payment>());
     }
 
-    void rabbitPerfTest(Converter<Transaction,byte[]> converter) {
+    void rabbitPerfTest(Converter<Payment,byte[]> converter) {
 
         var environment = Environment.builder().build();
 
@@ -62,15 +62,15 @@ public class RabbitMQPerfTest {
         final int[] i = {1};
         int expectedCount = 2000000;
 
-        Supplier<Transaction> supplier = () -> {
+        Supplier<Payment> supplier = () -> {
             if(i[0] > expectedCount)
                 return null;
             i[0]++;
-            return new Transaction(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
+            return new Payment(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
 
         };
 
-        Consumer<List<Transaction>> consumer = transactionList -> {
+        Consumer<List<Payment>> consumer = transactionList -> {
             transactionList.forEach(transaction ->
             {
                 producer.send(producer.messageBuilder().addData(

@@ -1,7 +1,7 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
 import org.springframework.core.io.UrlResource;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.task.configuration.EnableTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -46,19 +45,19 @@ public class BatchConfig {
 
     @Bean
     FlatFileItemReader reader() throws MalformedURLException {
-       return  new FlatFileItemReaderBuilder<Transaction>()
+       return  new FlatFileItemReaderBuilder<Payment>()
                .name("transactionReader")
                .linesToSkip(1) //skip header
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
-               .fieldSetMapper(new RecordFieldSetMapper<Transaction>(Transaction.class))
+               .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
                .resource(new UrlResource(fileLocation))
                .build();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Transaction>()
+    public JdbcBatchItemWriter<Payment> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Payment>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO ms_transactions (id, details) VALUES (:id, :details)")
                 .dataSource(dataSource)
@@ -93,7 +92,7 @@ public class BatchConfig {
         };
     }
     @Bean
-    public Step step1(ItemWriter<Transaction> writer,
+    public Step step1(ItemWriter<Payment> writer,
                       JobRepository jobRepository,
                       PlatformTransactionManager transactionManager,
                       ThreadPoolTaskExecutor taskExecutor) throws MalformedURLException {
@@ -103,7 +102,7 @@ public class BatchConfig {
         return new StepBuilder("step1")
                 .transactionManager(transactionManager)
                 .repository(jobRepository)
-                .<Transaction, Transaction> chunk(chunkSize)
+                .<Payment, Payment> chunk(chunkSize)
                 .reader(reader())
                 .writer(writer)
                 .taskExecutor(taskExecutor)

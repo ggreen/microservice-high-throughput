@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -43,19 +43,19 @@ public class BatchConfig {
     @Bean
     FlatFileItemReader reader()
     {
-       return  new FlatFileItemReaderBuilder<Transaction>()
+       return  new FlatFileItemReaderBuilder<Payment>()
                .name("transactionReader")
                .linesToSkip(1) //skip header
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
-               .fieldSetMapper(new RecordFieldSetMapper<Transaction>(Transaction.class))
+               .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
                .resource(new FileSystemResource(fileLocation))
                .build();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Transaction>()
+    public JdbcBatchItemWriter<Payment> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Payment>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .sql("INSERT INTO ms_transactions (id, details) VALUES (:id, :details)")
                 .dataSource(dataSource)
@@ -90,7 +90,7 @@ public class BatchConfig {
         };
     }
     @Bean
-    public Step step1(ItemWriter<Transaction> writer,
+    public Step step1(ItemWriter<Payment> writer,
                       JobRepository jobRepository,
                       PlatformTransactionManager transactionManager,
                       ThreadPoolTaskExecutor taskExecutor) {
@@ -100,7 +100,7 @@ public class BatchConfig {
         return new StepBuilder("step1")
                 .transactionManager(transactionManager)
                 .repository(jobRepository)
-                .<Transaction, Transaction> chunk(chunkSize)
+                .<Payment, Payment> chunk(chunkSize)
                 .reader(reader())
                 .writer(writer)
                 .taskExecutor(taskExecutor)

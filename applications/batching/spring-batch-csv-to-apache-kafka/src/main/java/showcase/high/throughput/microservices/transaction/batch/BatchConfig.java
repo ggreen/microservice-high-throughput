@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -46,12 +46,12 @@ public class BatchConfig {
     @Bean
     FlatFileItemReader reader()
     {
-       return  new FlatFileItemReaderBuilder<Transaction>()
+       return  new FlatFileItemReaderBuilder<Payment>()
                .name(applicationName+"-reader")
                .linesToSkip(1) //skip header
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
-               .fieldSetMapper(new RecordFieldSetMapper<Transaction>(Transaction.class))
+               .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
                .resource(new FileSystemResource(fileLocation))
                .build();
     }
@@ -86,7 +86,7 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step1(ItemWriter<Transaction> writer,
+    public Step step1(ItemWriter<Payment> writer,
                       JobRepository jobRepository,
                       PlatformTransactionManager transactionManager,
                       ThreadPoolTaskExecutor taskExecutor) {
@@ -96,7 +96,7 @@ public class BatchConfig {
         return new StepBuilder("step1")
                 .transactionManager(transactionManager)
                 .repository(jobRepository)
-                .<Transaction, Transaction> chunk(chunkSize)
+                .<Payment, Payment> chunk(chunkSize)
                 .reader(reader())
                 .writer(writer)
                 .taskExecutor(taskExecutor)
@@ -104,12 +104,12 @@ public class BatchConfig {
     }
 
     @Bean
-    KafkaItemWriter writer(KafkaTemplate<String, Transaction> template)
+    KafkaItemWriter writer(KafkaTemplate<String, Payment> template)
     {
         template.setMessageConverter(new JsonMessageConverter());
         template.setDefaultTopic(topicName);
 
-        var writer = new KafkaItemWriter<String,Transaction>();
+        var writer = new KafkaItemWriter<String, Payment>();
         writer.setKafkaTemplate(template);
         writer.setItemKeyMapper(transaction -> transaction.id() );
         return writer;

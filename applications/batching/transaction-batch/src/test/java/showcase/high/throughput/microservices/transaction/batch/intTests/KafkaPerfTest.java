@@ -2,7 +2,7 @@ package showcase.high.throughput.microservices.transaction.batch.intTests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import lombok.SneakyThrows;
 import nyla.solutions.core.patterns.batch.BatchJob;
 import nyla.solutions.core.patterns.conversion.Converter;
@@ -51,17 +51,17 @@ public class KafkaPerfTest {
         final int[] i = {1};
         int expectedCount = 2000000;
 
-        Supplier<Transaction> supplier = () -> {
+        Supplier<Payment> supplier = () -> {
             if(i[0] > expectedCount)
                 return null;
             i[0]++;
-            return new Transaction(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
+            return new Payment(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
 
         };
 
         final ObjectMapper objectMapper = new ObjectMapper();
 
-        Converter<Transaction, byte[]> converter = transaction ->
+        Converter<Payment, byte[]> converter = transaction ->
         {
             try {
                 return objectMapper.writeValueAsBytes(transaction);
@@ -73,7 +73,7 @@ public class KafkaPerfTest {
 
         Producer<String, byte[]> producer = new KafkaProducer<>(props);
 
-        Consumer<List<Transaction>> consumers = transactions -> {
+        Consumer<List<Payment>> consumers = transactions -> {
 
             transactions.forEach(transaction -> {
                 producer.send(new ProducerRecord<String, byte[]>(topicName, transaction.id(), converter.convert(transaction)));
@@ -81,7 +81,7 @@ public class KafkaPerfTest {
 
         };
 
-        BatchJob<Transaction,Transaction> job = new BatchJob<>(supplier,consumers,batchSize);
+        BatchJob<Payment, Payment> job = new BatchJob<>(supplier,consumers,batchSize);
 
         var report = job.execute();
 

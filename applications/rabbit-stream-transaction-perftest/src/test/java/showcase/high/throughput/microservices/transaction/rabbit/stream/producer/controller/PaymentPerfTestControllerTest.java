@@ -1,12 +1,9 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
-import org.springframework.rabbit.stream.producer.RabbitStreamTemplate;
-import showcase.high.throughput.microservices.domain.Transaction;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Message;
 import com.rabbitmq.stream.MessageBuilder;
 import com.rabbitmq.stream.Producer;
-import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,13 +15,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TransactionSendControllerTest {
+class PaymentPerfTestControllerTest {
 
     @Mock
     private TransactionToJsonBytesConverter converter;
 
     @Mock
-    private RabbitStreamTemplate producer;
+    private Producer producer;
 
     @Mock
     private MessageBuilder builder;
@@ -33,22 +30,26 @@ class TransactionSendControllerTest {
 
     @Mock
     private Message message;
-    private TransactionSendController subject;
-    private int workerCount = 3;
-    private Transaction transaction = JavaBeanGeneratorCreator.of(Transaction.class).create();
-
+    private TransactionPerfTestController subject;
 
     @BeforeEach
     void setUp() {
-        subject = new TransactionSendController(producer, converter);
+        subject = new TransactionPerfTestController(producer, converter,3);
     }
 
     @Test
-    void send() {
+    void perfTest() {
+
+        when(producer.messageBuilder()).thenReturn(builder);
+        when(builder.addData(any())).thenReturn(builder);
+        when(builder.applicationProperties()).thenReturn(properties);
+        when(properties.entry(anyString(),anyString())).thenReturn(properties);
+        when(properties.messageBuilder()).thenReturn(builder);
+        when(builder.build()).thenReturn(message);
 
         int count = 10;
-        subject.sendTransaction(transaction);
+        subject.perfTest("junit",count);
 
-        verify(producer).convertAndSend(any());
+        verify(producer,times(count)).send(any(),any());
     }
 }

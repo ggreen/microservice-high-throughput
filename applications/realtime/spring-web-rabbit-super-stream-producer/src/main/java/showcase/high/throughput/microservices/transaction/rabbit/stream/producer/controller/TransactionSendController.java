@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.rabbit.stream.producer.controller;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import showcase.high.throughput.microservices.transaction.batch.mapping.TransactionToJsonBytesConverter;
 import com.rabbitmq.stream.Producer;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ public class TransactionSendController {
 
     @PostMapping
     @RequestMapping("transaction")
-    void sendTransaction(@RequestBody Transaction transaction)
+    void sendTransaction(@RequestBody Payment transaction)
     {
                 producer.send(producer.messageBuilder()
                         .properties()

@@ -1,7 +1,7 @@
 package showcase.high.throughput.microservices.transaction.batch.intTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import nyla.solutions.core.patterns.batch.BatchJob;
 import nyla.solutions.core.patterns.batch.BatchReport;
 import nyla.solutions.core.patterns.jdbc.Sql;
@@ -37,11 +37,11 @@ public class JdbcPerfTest {
             final int[] i = {1};
             int expectedCount = 2000000;
 
-            Supplier<Transaction> supplier = () -> {
+            Supplier<Payment> supplier = () -> {
                 if(i[0] > expectedCount)
                     return null;
                 i[0]++;
-                return new Transaction(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
+                return new Payment(valueOf(i[0]),valueOf(i[0]),null,null,0,null);
 
             };
 
@@ -53,7 +53,7 @@ public class JdbcPerfTest {
 
                 try(PreparedStatement preparedStatement = connection.prepareStatement("insert into ms_transactions(id,details) values (?,?)"))
                 {
-                    Consumer<List<Transaction>> consumer = transactionList -> {
+                    Consumer<List<Payment>> consumer = transactionList -> {
                         transactionList.forEach(transaction ->
                         {
                             try {

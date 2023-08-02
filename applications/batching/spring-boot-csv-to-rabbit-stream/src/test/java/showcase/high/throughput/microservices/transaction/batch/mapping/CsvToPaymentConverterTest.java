@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch.mapping;
 
-import showcase.high.throughput.microservices.domain.Transaction;
+import showcase.high.throughput.microservices.domain.Payment;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +11,14 @@ import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CsvToTransactionConverterTest {
+class CsvToPaymentConverterTest {
 
     private CsvToTransactionConverter subject;
 
     @Test
     void given_csv_when_convert_then_return_transaction() {
 
-        var expected = JavaBeanGeneratorCreator.of(Transaction.class).create();
+        var expected = JavaBeanGeneratorCreator.of(Payment.class).create();
         List<String> csv = asList(
                 expected.id(),
                 expected.details(),
