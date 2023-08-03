@@ -87,7 +87,7 @@ public class BatchConfig {
         return new JobExecutionListener() {
             @Override
             public void beforeJob(JobExecution jobExecution) {
-                jdbcTemplate.update("truncate ms_transactions");
+                jdbcTemplate.update("truncate  batching.payments");
             }
 
             @Override
