@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
-import showcase.high.throughput.microservices.domain.Payment;
+import lombok.SneakyThrows;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -20,10 +20,11 @@ import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
+import showcase.high.throughput.microservices.domain.Payment;
 
 import javax.sql.DataSource;
 
@@ -40,6 +41,7 @@ public class BatchConfig {
     @Value("${batch.core.pool.size}")
     private int corePoolSize;
 
+    @SneakyThrows
     @Bean
     FlatFileItemReader reader()
     {
@@ -49,7 +51,7 @@ public class BatchConfig {
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
                .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
-               .resource(new FileSystemResource(fileLocation))
+               .resource(new UrlResource(fileLocation))
                .build();
     }
 
