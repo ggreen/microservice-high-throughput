@@ -57,9 +57,16 @@ public class BatchConfig {
 
     @Bean
     public JdbcBatchItemWriter<Payment> writer(DataSource dataSource) {
+
         return new JdbcBatchItemWriterBuilder<Payment>()
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO ms_transactions (id, details) VALUES (:id, :details)")
+                .sql("""
+            INSERT INTO batching.payments (id, 
+            details, contact,  
+            location, amount, timestamp) 
+            VALUES (:id, :details, :contact, :location, :amount,
+            :timestamp)
+            """)
                 .dataSource(dataSource)
                 .build();
     }
@@ -83,7 +90,7 @@ public class BatchConfig {
         return new JobExecutionListener() {
             @Override
             public void beforeJob(JobExecution jobExecution) {
-                jdbcTemplate.update("truncate ms_transactions");
+                jdbcTemplate.update("truncate batching.payments");
             }
 
             @Override

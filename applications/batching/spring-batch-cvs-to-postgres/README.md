@@ -1,4 +1,20 @@
 
+Setup Table
+
+```roomsql
+CREATE SCHEMA IF NOT EXISTS batching;
+
+CREATE TABLE batching.payments  (
+id VARCHAR(20) NOT NULL PRIMARY KEY,
+details VARCHAR(20) NULL,
+contact VARCHAR(20) NULL,
+location VARCHAR(20) NULL,
+amount NUMERIC(20,3) NOT NULL,
+"timestamp" timestamp
+);
+```
+
+
 Report on 
 
 job_execution_id |  status   | total_time  |   tps
