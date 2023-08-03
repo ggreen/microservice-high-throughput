@@ -1,6 +1,6 @@
 package showcase.high.throughput.microservices.transaction.batch;
 
-import showcase.high.throughput.microservices.domain.Payment;
+import lombok.SneakyThrows;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
@@ -18,12 +18,13 @@ import org.springframework.batch.item.kafka.KafkaItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.converter.JsonMessageConverter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
+import showcase.high.throughput.microservices.domain.Payment;
 
 @Configuration
 @EnableBatchProcessing
@@ -43,6 +44,7 @@ public class BatchConfig {
     @Value("${batch.apache.kafka.topic.name:test-transactions}")
     private String topicName;
 
+    @SneakyThrows
     @Bean
     FlatFileItemReader reader()
     {
@@ -52,7 +54,7 @@ public class BatchConfig {
                .delimited()
                .names(new String[]{"id","details","contact","location","amount","timestamp"})
                .fieldSetMapper(new RecordFieldSetMapper<Payment>(Payment.class))
-               .resource(new FileSystemResource(fileLocation))
+               .resource(new UrlResource(fileLocation))
                .build();
     }
 
@@ -68,21 +70,6 @@ public class BatchConfig {
                 .flow(step1)
                 .end()
                 .build();
-    }
-
-    @Bean
-    JobExecutionListener listener(JdbcTemplate jdbcTemplate)
-    {
-        return new JobExecutionListener() {
-            @Override
-            public void beforeJob(JobExecution jobExecution) {
-                jdbcTemplate.update("truncate ms_transactions");
-            }
-
-            @Override
-            public void afterJob(JobExecution jobExecution) {
-            }
-        };
     }
 
     @Bean

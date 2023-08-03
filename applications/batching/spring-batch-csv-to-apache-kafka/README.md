@@ -1,5 +1,14 @@
 
 
+```properties
+batch.chunk.size=10000
+batch.core.pool.size=16
+batch.file.location=/Users/Projects/solutions/onLine-Learning/Linked-In-Learning/High-Throughput/microservice-high-throughput/scripts/generate_batch_file/runtime/transactions.csv
+spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
+spring.kafka.producer.acks=1
+spring.application.name=spring-batch-csv-to-rabbit-stream
+```
+
 ```shell
 java -Xms5g -Xmx5g -jar applications/batching/spring-batch-csv-to-apache-kafka/target/spring-batch-csv-to-apache-kafka-0.0.1-SNAPSHOT.jar
 ```
