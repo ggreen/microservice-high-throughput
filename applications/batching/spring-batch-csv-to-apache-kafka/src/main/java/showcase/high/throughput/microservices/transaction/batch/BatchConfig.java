@@ -46,7 +46,7 @@ public class BatchConfig {
 
     @SneakyThrows
     @Bean
-    FlatFileItemReader reader()
+    FlatFileItemReader<Payment> reader()
     {
        return  new FlatFileItemReaderBuilder<Payment>()
                .name(applicationName+"-reader")
