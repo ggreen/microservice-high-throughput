@@ -91,7 +91,7 @@ public class BatchConfig {
     }
 
     @Bean
-    KafkaItemWriter writer(KafkaTemplate<String, Payment> template)
+    KafkaItemWriter<String, Payment> writer(KafkaTemplate<String, Payment> template)
     {
         template.setMessageConverter(new JsonMessageConverter());
         template.setDefaultTopic(topicName);
