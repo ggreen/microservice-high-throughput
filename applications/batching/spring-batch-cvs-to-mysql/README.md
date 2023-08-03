@@ -21,7 +21,20 @@ timestamp timestamp
 );
 ```
 
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/mysql
+spring.datasource.username=...
+spring.datasource.password=...
+spring.datasource.platform=mysql
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+batch.chunk.size=10000
+batch.core.pool.size=16
+batch.file.location=....
 
+spring.application.name=payment-mysql-batch
+
+
+```
 Create database
 
 ```roomsql
