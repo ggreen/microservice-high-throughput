@@ -277,3 +277,81 @@ CREATE TABLE task_task_batch (
 	task_execution_id int8 NOT NULL,
 	job_execution_id int8 NOT NULL,
 	CONSTRAINT task_exec_batch_fk FOREIGN KEY (task_execution_id) REFERENCES task_execution(task_execution_id)
+
+
+-- public.batch_job_execution_seq definition
+
+-- DROP SEQUENCE public.batch_job_execution_seq;
+
+CREATE SEQUENCE public.batch_job_execution_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+
+-- public.batch_job_seq definition
+
+-- DROP SEQUENCE public.batch_job_seq;
+
+CREATE SEQUENCE public.batch_job_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+
+-- public.batch_step_execution_seq definition
+
+-- DROP SEQUENCE public.batch_step_execution_seq;
+
+CREATE SEQUENCE public.batch_step_execution_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+
+-- public.hibernate_sequence definition
+
+-- DROP SEQUENCE public.hibernate_sequence;
+
+CREATE SEQUENCE public.hibernate_sequence
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+
+-- public.task_execution_metadata_seq definition
+
+-- DROP SEQUENCE public.task_execution_metadata_seq;
+
+CREATE SEQUENCE public.task_execution_metadata_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+
+
+-- public.task_seq definition
+
+-- DROP SEQUENCE public.task_seq;
+
+CREATE SEQUENCE public.task_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
