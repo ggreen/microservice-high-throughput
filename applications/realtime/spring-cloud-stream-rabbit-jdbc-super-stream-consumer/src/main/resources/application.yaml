@@ -1,0 +1,17 @@
+server:
+  port: 6021
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+spring:
+  application:
+    name: "spring-cloud-stream-rabbit-jdbc-super-stream-consumer"

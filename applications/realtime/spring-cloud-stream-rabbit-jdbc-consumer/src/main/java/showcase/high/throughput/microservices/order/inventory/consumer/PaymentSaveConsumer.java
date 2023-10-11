@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
-@Component
+//@Component
 public class PaymentSaveConsumer implements Consumer<Payment> {
     private final PaymentJdbcRepository repository;
 

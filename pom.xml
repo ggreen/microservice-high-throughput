@@ -25,6 +25,7 @@
         <module>applications/realtime/spring-web-rabbit-super-stream-producer</module>
         <module>applications/bench-marks/apache-kafka-bench-mark</module>
         <module>applications/bench-marks/rabbit-stream-bench-mark</module>
+        <module>applications/realtime/spring-cloud-stream-rabbit-jdbc-super-stream-consumer</module>
     </modules>
     <build>
         <pluginManagement>

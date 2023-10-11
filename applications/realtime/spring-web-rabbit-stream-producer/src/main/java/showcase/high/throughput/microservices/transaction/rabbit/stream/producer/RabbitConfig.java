@@ -38,18 +38,6 @@ public class RabbitConfig {
         return mapper;
     }
 
-//    @Bean
-//    Environment rabbitEnv()
-//    {
-//        var env = Environment.builder().build();
-////        env.streamCreator().stream(streamName).create();
-//
-////        try{ env.deleteStream(streamName); } catch (Exception e){}
-////        env.streamCreator().stream(streamName).create();
-//
-//        return env;
-//    }
-
     @Bean
     Queue queueStream()
     {
@@ -72,11 +60,4 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-//    @Bean
-//    Producer producer(Environment environment)
-//    {
-//        return environment.producerBuilder().stream(streamName)
-//                //.batchSize(batchSize)
-//                .build();
-//    }
 }

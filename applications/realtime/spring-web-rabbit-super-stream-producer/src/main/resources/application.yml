@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spring-boot-rabbit-stream-producer
+rabbitmq:
+  super:
+    stream:
+      name: retail.stream.transaction
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  worker:
+    count: 10

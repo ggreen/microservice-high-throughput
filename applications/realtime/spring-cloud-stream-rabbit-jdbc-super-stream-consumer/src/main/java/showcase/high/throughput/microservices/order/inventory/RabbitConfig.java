@@ -4,6 +4,7 @@ package showcase.high.throughput.microservices.order.inventory;
 import com.rabbitmq.stream.Consumer;
 import com.rabbitmq.stream.Environment;
 import lombok.extern.slf4j.Slf4j;
+import nyla.solutions.core.util.Text;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
@@ -12,6 +13,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Configuration
@@ -29,7 +32,7 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.host:127.0.0.1}")
     private String hostname = "127.0.0.1";
 
-    @Value("${spring.rabbitmq.stream.name}")
+    @Value("${spring.rabbitmq.stream.name:retail.stream.transaction}")
     private String streamName;
 
     @Bean
@@ -53,6 +56,7 @@ public class RabbitConfig {
                 .password(password)
                 .clientProperty("id",applicationName)
                 .build();
+
 //        env.streamCreator().stream(streamName).create();
 
         return env;
@@ -65,13 +69,20 @@ public class RabbitConfig {
                 .build();
     }
 
+
     @Bean
     Consumer consumer(Environment environment)
     {
-       return environment.consumerBuilder()
-                .superStream("invoices")
+        return environment.consumerBuilder()
+                .superStream(streamName)
+                .name(applicationName)
+                .singleActiveConsumer()
                 .messageHandler((context, message) -> {
+                    log.info("stream:{},",context.stream());
+                    var msg = new String(message.getBodyAsBinary(), StandardCharsets.UTF_8);
+                    log.info(msg);
                 })
                 .build();
     }
+
 }
